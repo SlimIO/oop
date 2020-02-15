@@ -1,18 +1,8 @@
 /* eslint-disable no-extra-boolean-cast */
 "use strict";
 
-/**
- * @function canItBePrimitive
- * @param {*} object
- * @returns {boolean}
- */
-function canItBePrimitive(object) {
-    if (object instanceof RegExp || object instanceof Error) {
-        return true;
-    }
-
-    return Reflect.has(object, Symbol.toPrimitive);
-}
+// Require Internal Dependencies
+const { canItBePrimitive, isPlainObject, toNullable } = require("./src/utils");
 
 /**
  * @function toNumber
@@ -29,7 +19,7 @@ function toNumber(value) {
 
     const expectedNumberValue = Number(value);
     if (Number.isNaN(expectedNumberValue)) {
-        throw new TypeError("value must be a valid Number representation");
+        throw new TypeError("value must be a valid number representation");
     }
 
     return expectedNumberValue;
@@ -47,16 +37,14 @@ function toBigInt(value) {
 /**
  * @function toString
  * @param {!any} value
- * @param {object} [options]
- * @param {boolean} [options.returnSymbol=false] dont handle symbol primitive
  * @returns {string}
  *
  * @throws {TypeError}
  */
-function toString(value, options = Object.create(null)) {
+function toString(value) {
     const type = typeof value;
     if (type === "symbol") {
-        return Boolean(options.returnSymbol) ? value : value.description;
+        return value.description;
     }
     if (type === "object" && !canItBePrimitive(value)) {
         throw new TypeError("value must be a valid string representation");
@@ -66,28 +54,60 @@ function toString(value, options = Object.create(null)) {
 }
 
 /**
- * @function toBoolean
+ * @function toSymString
  * @param {!any} value
- * @param {boolean} [defaultValue=null]
- * @returns {boolean}
+ * @returns {string|symbol}
  */
-function toBoolean(value, defaultValue = null) {
-    if (defaultValue !== null && (typeof value === "undefined" || value === null)) {
-        return Boolean(defaultValue);
-    }
-
-    return Boolean(value);
-}
-
-/**
- * @function toNullableString
- * @param {!any} value
- * @returns {string|null}
- */
-function toNullableString(value) {
-    if (typeof value === "undefined" || value === null) {
-        return null;
+function toSymString(value) {
+    if (typeof value === "symbol") {
+        return value;
     }
 
     return toString(value);
 }
+
+/**
+ * @function toIterable
+ * @param {!any} value
+ * @returns {IterableIterator<any>}
+ */
+function toIterable(value) {
+    return Reflect.has(value, Symbol.iterator) ? value : Array.from(value);
+}
+
+/**
+ * @function toPlainObject
+ * @param {!any} value
+ * @param {boolean} [handleNullAndUndefined=false]
+ * @returns {object}
+ *
+ * @throws {TypeError}
+ */
+function toPlainObject(value, handleNullAndUndefined = false) {
+    if (Reflect.has(value, Symbol.iterator)) {
+        return Object.fromEntries(value);
+    }
+    if (handleNullAndUndefined && (value === null || typeof value === "undefined")) {
+        return Object.create(null);
+    }
+    if (!isPlainObject(value)) {
+        throw new TypeError("value must be an object");
+    }
+
+    return value;
+}
+
+module.exports = {
+    toNumber,
+    toBigInt,
+    toString,
+    toSymString,
+    toNullableString: toNullable(toString),
+    toNullableNumber: toNullable(toNumber),
+    toNullableBoolean: toNullable((value) => Boolean(value)),
+    toIterable,
+    toPlainObject,
+    utils: {
+        toNullable
+    }
+};
