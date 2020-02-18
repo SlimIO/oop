@@ -5,9 +5,9 @@ declare namespace oop {
     export function toSymString(value: symbol): symbol;
     export function toSymString(value: any): string;
     export function toBigInt(value: any): bigint;
-    export function toIterable(value: Iterable): Iterable;
-    export function toIterable(value: Array | ArrayLike): Array;
-    export function toPlainObject(value: Iterable | null | undefined | object, handleNullAndUndefined?: boolean): object;
+    export function toIterable(value: Iterable<any>): Iterable<any>
+    export function toIterable(value: Array<any> | ArrayLike<any>): Array<any>;
+    export function toPlainObject(value: Iterable<any> | null | undefined | object, handleNullAndUndefined?: boolean): object;
     export function toNullableString(value: any): string;
     export function toNullableString(value: null | undefined): null;
     export function toNullableNumber(value: bigint): bigint;
