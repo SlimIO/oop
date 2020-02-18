@@ -1,9 +1,11 @@
 # Oop
-![version](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/SlimIO/oop/master/package.json&query=$.version&label=Version)
+![version](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/SlimIO/oop/master/package.json&query=$.version&label=version)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/SlimIO/oop/commit-activity)
 ![MIT](https://img.shields.io/github/license/mashape/apistatus.svg)
 ![dep](https://img.shields.io/david/SlimIO/oop)
-![size](https://img.shields.io/bundlephobia/min/@slimio/oop.svg?style=flat)
+![size](https://img.shields.io/github/languages/code-size/SlimIO/oop)
+![known vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/SlimIO/oop)
+[![Build Status](https://travis-ci.com/SlimIO/oop.svg?branch=master)](https://travis-ci.com/SlimIO/oop)
 
 JavaScript OOP library crafted to help crafting code with an autognosis and protocol-based design.
 
