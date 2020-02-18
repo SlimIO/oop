@@ -2,7 +2,7 @@
 "use strict";
 
 // Require Internal Dependencies
-const { canItBePrimitive, isPlainObject, toNullable } = require("./src/utils");
+const { canItBePrimitive, isPlainObject, toNullable, isValueIterable } = require("./src/utils");
 
 /**
  * @function toNumber
@@ -72,7 +72,7 @@ function toSymString(value) {
  * @returns {IterableIterator<any>}
  */
 function toIterable(value) {
-    return Reflect.has(value, Symbol.iterator) ? value : Array.from(value);
+    return isValueIterable(value) ? value : Array.from(value);
 }
 
 /**
@@ -84,12 +84,15 @@ function toIterable(value) {
  * @throws {TypeError}
  */
 function toPlainObject(value, handleNullAndUndefined = false) {
-    if (Reflect.has(value, Symbol.iterator)) {
-        return Object.fromEntries(value);
-    }
     if (handleNullAndUndefined && (value === null || typeof value === "undefined")) {
         return Object.create(null);
     }
+
+    if (isValueIterable(value)) {
+        return Object.fromEntries(value);
+    }
+
+    // Note: this is a bad pattern to handle cross-realm objects!
     if (!isPlainObject(value)) {
         throw new TypeError("value must be an object");
     }

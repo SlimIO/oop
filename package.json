@@ -17,8 +17,27 @@
         "SlimIO",
         "oop"
     ],
+    "files": [
+        "index.js",
+        "index.d.ts",
+        "src/utils.js"
+    ],
     "author": "SlimIO",
     "license": "MIT",
+    "jest": {
+        "collectCoverageFrom": [
+          "index.js",
+          "**/src/**/*.js"
+        ],
+        "testEnvironment": "node",
+        "testMatch": [
+          "**/test/**/*.js"
+        ],
+        "testPathIgnorePatterns": [
+          "/node_modules/",
+          "/test/fixtures/"
+        ]
+      },
     "bugs": {
         "url": "https://github.com/SlimIO/oop/issues"
     },

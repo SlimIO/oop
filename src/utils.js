@@ -4,9 +4,6 @@
  * @namespace utils
  */
 
-// CONSTANTS
-const kObjectPrototype = Object.getPrototypeOf({});
-
 /**
  * @function canItBePrimitive
  * @description check whenever a given object can be transformed into a String primitive
@@ -30,12 +27,27 @@ function canItBePrimitive(object) {
  * @returns {boolean}
  */
 function isPlainObject(value) {
-    if (Object.prototype.toString.call(value).slice(8, -1) !== "Object") {
+    if (Object.prototype.toString.call(value) !== "[object Object]") {
         return false;
     }
-    const prototype = Object.getPrototypeOf(value);
+    const prototype = Reflect.getPrototypeOf(value);
 
-    return prototype === null || prototype === kObjectPrototype;
+    return prototype === null || prototype === Reflect.getPrototypeOf({});
+}
+
+/**
+ * @function isValueIterable
+ * @description check if a given value is iterable
+ * @param {!any} value any value
+ * @returns {boolean}
+ */
+function isValueIterable(value) {
+    if (value === null) {
+        return false;
+    }
+    const objValue = Object(value);
+
+    return Symbol.iterator in objValue || Symbol.asyncIterator in objValue;
 }
 
 /**
@@ -56,5 +68,6 @@ function toNullable(predicate) {
 module.exports = {
     canItBePrimitive,
     isPlainObject,
+    isValueIterable,
     toNullable
 };
