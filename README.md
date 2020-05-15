@@ -6,7 +6,6 @@
 ![size](https://img.shields.io/github/languages/code-size/SlimIO/oop)
 ![known vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/SlimIO/oop)
 [![Build Status](https://travis-ci.com/SlimIO/oop.svg?branch=master)](https://travis-ci.com/SlimIO/oop)
-[![Greenkeeper badge](https://badges.greenkeeper.io/SlimIO/oop.svg)](https://greenkeeper.io/)
 
 JavaScript OOP library crafted to help crafting code with an autognosis and protocol-based design.
 
