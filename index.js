@@ -17,7 +17,7 @@ function toNumber(value) {
         return value;
     }
 
-    const expectedNumberValue = Number(value);
+    const expectedNumberValue = Number.parseInt(value, 10);
     if (Number.isNaN(expectedNumberValue)) {
         throw new TypeError("value must be a valid number representation");
     }
