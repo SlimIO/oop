@@ -7,7 +7,11 @@
 ![known vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/SlimIO/oop)
 [![Build Status](https://travis-ci.com/SlimIO/oop.svg?branch=master)](https://travis-ci.com/SlimIO/oop)
 
-JavaScript OOP library crafted to help crafting code with an autognosis and protocol-based design.
+JavaScript OOP library created to help designing behaviorial and meta based code. The idea is to resonate much more in pure object and avoid any explicit assertion. Also one of the big point is to prefer conversion over strict type (ADT).
+
+One of the long-term goals is to find a model to work with the autognosis rule.
+
+> An autognostic object can only have detailed knowledge of itself.
 
 ## Requirements
 - [Node.js](https://nodejs.org/en/) v12 or higher
@@ -22,9 +26,22 @@ $ npm i @slimio/oop
 $ yarn add @slimio/oop
 ```
 
-
 ## Usage example
-TBC
+
+```js
+import { toIterable } from "@slimio/oop";
+
+function doTheWork(anyValue) {
+    const iter = toIterable(anyValue);
+
+    for (const item of iter) {
+        console.log(item);
+    }
+}
+
+doTheWork(new Set([1, 2, 3]));
+doTheWork(["foo", "bar"]);
+```
 
 ## API
 
