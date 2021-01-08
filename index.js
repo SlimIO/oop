@@ -37,11 +37,12 @@ function toBigInt(value) {
 /**
  * @function toString
  * @param {!any} value
+ * @param {!any} params
  * @returns {string}
  *
  * @throws {TypeError}
  */
-function toString(value) {
+function toString(value, params) {
     const type = typeof value;
     if (type === "symbol") {
         return value.description;
@@ -49,9 +50,13 @@ function toString(value) {
     if (type === "object" && !canItBePrimitive(value)) {
         throw new TypeError("value must be a valid string representation");
     }
+    if (type === "string" && !params.allowEmptyString && !value.length) {
+        throw new TypeError("Empty strings are forbidden");
+    }
 
     return String(value);
 }
+
 
 /**
  * @function toSymString
