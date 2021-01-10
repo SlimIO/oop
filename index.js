@@ -2,7 +2,12 @@
 "use strict";
 
 // Require Internal Dependencies
-const { canItBePrimitive, isPlainObject, toNullable, isValueIterable } = require("./src/utils");
+const {
+    canItBePrimitive,
+    isPlainObject,
+    toNullable,
+    isValueIterable
+} = require("./src/utils");
 
 /**
  * @function toNumber
@@ -37,26 +42,32 @@ function toBigInt(value) {
 /**
  * @function toString
  * @param {!any} value
- * @param {!any} params
+ * @param {!any} options
  * @returns {string}
  *
  * @throws {TypeError}
  */
-function toString(value, params) {
+function toString(value, options = {}) {
     const type = typeof value;
+    const {
+        allowEmptyString = true
+    } = options;
+
     if (type === "symbol") {
         return value.description;
     }
+
     if (type === "object" && !canItBePrimitive(value)) {
         throw new TypeError("value must be a valid string representation");
     }
-    if (type === "string" && !params.allowEmptyString && !value.length) {
-        throw new TypeError("Empty strings are forbidden");
+
+    const resultStr = String(value);
+    if (!options.allowEmptyString && !value.length) {
+        throw new TypeError("value can't be an empty string");
     }
 
-    return String(value);
+    return resultStr;
 }
-
 
 /**
  * @function toSymString
