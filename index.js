@@ -1,13 +1,9 @@
+
 /* eslint-disable no-extra-boolean-cast */
 "use strict";
 
 // Require Internal Dependencies
-const {
-    canItBePrimitive,
-    isPlainObject,
-    toNullable,
-    isValueIterable
-} = require("./src/utils");
+const { canItBePrimitive, isPlainObject, toNullable, isValueIterable } = require("./src/utils");
 
 /**
  * @function toNumber
@@ -42,28 +38,25 @@ function toBigInt(value) {
 /**
  * @function toString
  * @param {!any} value
- * @param {!any} options
+ * @param {object} [options]
+ * @param {boolean} [options.allowEmptyString=true]
  * @returns {string}
  *
  * @throws {TypeError}
  */
-function toString(value, options = {}) {
+function toString(value) {
     const type = typeof value;
-    const {
-        allowEmptyString = true
-    } = options;
-
+    const { allowEmptyString = true } = options;
     if (type === "symbol") {
         return value.description;
     }
-
     if (type === "object" && !canItBePrimitive(value)) {
         throw new TypeError("value must be a valid string representation");
     }
 
     const resultStr = String(value);
-    if (!options.allowEmptyString && !value.length) {
-        throw new TypeError("value can't be an empty string");
+    if (!allowEmptyString && value.length === 0) {
+        throw "value can't be an empty string";
     }
 
     return resultStr;
