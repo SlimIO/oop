@@ -44,7 +44,7 @@ function toBigInt(value) {
  *
  * @throws {TypeError}
  */
-function toString(value) {
+function toString(value, options = {}) {
     const type = typeof value;
     const { allowEmptyString = true } = options;
     if (type === "symbol") {
@@ -56,7 +56,7 @@ function toString(value) {
 
     const resultStr = String(value);
     if (!allowEmptyString && value.length === 0) {
-        throw "value can't be an empty string";
+        throw new TypeError("value can not be an empty string");
     }
 
     return resultStr;
