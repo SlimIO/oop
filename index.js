@@ -55,7 +55,7 @@ function toString(value, options = {}) {
     }
 
     const resultStr = String(value);
-    if (!allowEmptyString && value.length === 0) {
+    if (!allowEmptyString && resultStr.length === 0) {
         throw new TypeError("value can not be an empty string");
     }
 
