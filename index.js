@@ -1,3 +1,4 @@
+
 /* eslint-disable no-extra-boolean-cast */
 "use strict";
 
@@ -37,12 +38,15 @@ function toBigInt(value) {
 /**
  * @function toString
  * @param {!any} value
+ * @param {object} [options]
+ * @param {boolean} [options.allowEmptyString=true]
  * @returns {string}
  *
  * @throws {TypeError}
  */
-function toString(value) {
+function toString(value, options = {}) {
     const type = typeof value;
+    const { allowEmptyString = true } = options;
     if (type === "symbol") {
         return value.description;
     }
@@ -50,7 +54,12 @@ function toString(value) {
         throw new TypeError("value must be a valid string representation");
     }
 
-    return String(value);
+    const resultStr = String(value);
+    if (!allowEmptyString && resultStr.length === 0) {
+        throw new TypeError("value can not be an empty string");
+    }
+
+    return resultStr;
 }
 
 /**

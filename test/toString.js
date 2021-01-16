@@ -55,3 +55,13 @@ test("toSymString('foo') must return the primitive string 'foo'", () => {
     expect(result).toStrictEqual("foo");
 });
 
+test("toString('') must throw a TypeError", () => {
+    expect.assertions(1);
+    try {
+        oop.toString("", { allowEmptyString: false });
+    }
+    catch (error) {
+        expect(error.name).toStrictEqual("TypeError");
+    }
+});
+
