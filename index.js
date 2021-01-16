@@ -5,6 +5,10 @@
 // Require Internal Dependencies
 const { canItBePrimitive, isPlainObject, toNullable, isValueIterable } = require("./src/utils");
 
+const toNullableString = toNullable(toString);
+const toNullableNumber = toNullable(toNumber);
+const toNullableBoolean = toNullable((value) => Boolean(value));
+
 /**
  * @function toNumber
  * @description convert any JavaScript value to a Number (if not possible it will throw a TypeError);
@@ -44,9 +48,11 @@ function toBigInt(value) {
  *
  * @throws {TypeError}
  */
-function toString(value, options = {}) {
+function toString(value, options) {
+    const localOptions = toPlainObject(options, true);
+    const allowEmptyString = toNullableBoolean(localOptions.allowEmptyString) ?? true;
     const type = typeof value;
-    const { allowEmptyString = true } = options;
+
     if (type === "symbol") {
         return value.description;
     }
@@ -55,7 +61,7 @@ function toString(value, options = {}) {
     }
 
     const resultStr = String(value);
-    if (!allowEmptyString && resultStr.length === 0) {
+    if (!allowEmptyString && resultStr.trimStart().length === 0) {
         throw new TypeError("value can not be an empty string");
     }
 
@@ -114,9 +120,9 @@ module.exports = {
     toBigInt,
     toString,
     toSymString,
-    toNullableString: toNullable(toString),
-    toNullableNumber: toNullable(toNumber),
-    toNullableBoolean: toNullable((value) => Boolean(value)),
+    toNullableString,
+    toNullableNumber,
+    toNullableBoolean,
     toIterable,
     toPlainObject,
     utils: {

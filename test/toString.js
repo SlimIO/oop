@@ -55,7 +55,7 @@ test("toSymString('foo') must return the primitive string 'foo'", () => {
     expect(result).toStrictEqual("foo");
 });
 
-test("toString('') must throw a TypeError", () => {
+test("toString('', { allowEmptyString: false }) must throw a TypeError", () => {
     expect.assertions(1);
     try {
         oop.toString("", { allowEmptyString: false });
@@ -65,3 +65,12 @@ test("toString('') must throw a TypeError", () => {
     }
 });
 
+test("toString('') options work for every value with similar behavior", () => {
+    expect.assertions(1);
+    try {
+        oop.toString("", [["allowEmptyString", false]]);
+    }
+    catch (error) {
+        expect(error.name).toStrictEqual("TypeError");
+    }
+});

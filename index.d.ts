@@ -1,7 +1,7 @@
 declare namespace oop {
     export function toNumber(value: bigint): bigint;
     export function toNumber(value: any): number;
-    export function toString(value: any): string;
+    export function toString(value: any, options?: { allowEmptyString?: boolean }): string;
     export function toSymString(value: symbol): symbol;
     export function toSymString(value: any): string;
     export function toBigInt(value: any): bigint;
