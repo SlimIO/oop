@@ -65,9 +65,28 @@ function toNullable(predicate) {
     };
 }
 
+/**
+ * @function getObjectType
+ * @memberof utils#
+ * @description Known the name of a given JavaScript Object
+ * @param {*} value any Object value
+ * @returns {string | null}
+ *
+ * @example
+ * getObjectType({}); // object
+ * getObjectType(new Map()); // map
+ * getObjectType(new Set()); // set
+ */
+function getObjectType(value) {
+    // Object.prototype.toString.call will return object like [object Map], [object Set] etc
+    // Slice from index 8 to value.length - 1
+    return Object.prototype.toString.call(value).slice(8, -1).toLowerCase();
+}
+
 module.exports = {
     canItBePrimitive,
     isPlainObject,
     isValueIterable,
-    toNullable
+    toNullable,
+    getObjectType
 };

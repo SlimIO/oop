@@ -3,6 +3,8 @@
 
 // Require Internal Dependencies
 const { canItBePrimitive, isPlainObject, toNullable, isValueIterable } = require("./src/utils");
+const Box = require("./src/box");
+const Contract = require("./src/contract");
 
 /**
  * @function toNumber
@@ -101,6 +103,8 @@ function toPlainObject(value, handleNullAndUndefined = false) {
 }
 
 module.exports = {
+    ...Box,
+    ...Contract,
     toNumber,
     toBigInt,
     toString,
